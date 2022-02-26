@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Prizes;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public class BonusWheel : MonoBehaviour
 {
@@ -48,7 +50,7 @@ public class BonusWheel : MonoBehaviour
         _spinButton.interactable = false;
         float startingAngle = _wheelTransform.eulerAngles.z;
         float endingAngle = (_numRotations * 360f) + _singleRotationAngle * indexOfPrize - startingAngle;
-        Debug.Log($"Chose Index={indexOfPrize} and endingAngle={endingAngle}");
+        //Debug.Log($"Chose Index={indexOfPrize} and endingAngle={endingAngle}");
         float currTime = 0;
 
         while (currTime < _spinTime)
@@ -76,6 +78,22 @@ public class BonusWheel : MonoBehaviour
         {
             _prizeSectors[i].transform.eulerAngles = new Vector3(0, 0, -360f / NUM_PRIZES * i);
         }
+    }
+
+
+    private void RunUnitTests(int spinCount)
+    {
+        UnitTesting.OutputSectorData(_prizeSectors);
+
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        for (int i = 0; i < spinCount; i++)
+        {
+            var prize = _dropTable.GeneratePrize(out _);
+            UnitTesting.AddPrize(prize);
+        }
+        stopwatch.Stop();
+        UnitTesting.OutputPrizeResults(stopwatch.ElapsedMilliseconds);
     }
 
     
