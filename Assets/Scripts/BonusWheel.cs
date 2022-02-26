@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Prizes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class BonusWheel : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Button _spinButton;
     [SerializeField] private Transform _wheelTransform;
-    [SerializeField] private WheelSector[] _prizes;
+    [SerializeField] private WheelSector[] _prizeSectors;
     [Header("Settings")] [Range(0.5f, 5f)]
     [SerializeField]private float _spinTime = 2.5f;
     [SerializeField]private int _numRotations = 4;
@@ -17,7 +18,7 @@ public class BonusWheel : MonoBehaviour
     
     private float _singleRotationAngle = 22.5f;
     private const int NUM_PRIZES = 8;
-    
+    private SectorDropTable _dropTable;
     private bool _isSpinning;
 
     /*********************************************************************/
@@ -26,6 +27,7 @@ public class BonusWheel : MonoBehaviour
     {
         _singleRotationAngle = 360f / NUM_PRIZES;
         SetPrizeDisplay();
+        _dropTable = new SectorDropTable(_prizeSectors);
         _spinButton.onClick.AddListener(SpinWheel);
     }
 
@@ -35,16 +37,12 @@ public class BonusWheel : MonoBehaviour
         if (_isSpinning)
             return;
         
-        StartCoroutine(WheelRotation(GetIndexOfRandomPrize()));
-    }
-
-    private int GetIndexOfRandomPrize()
-    {
-        //TODO- base off dropchances
-        return UnityEngine.Random.Range(1, 8);
+        var prize = _dropTable.GeneratePrize(out var sectorIndex);
+        StartCoroutine(WheelRotation(sectorIndex, prize));
     }
     
-    IEnumerator WheelRotation(int indexOfPrize)
+    
+    IEnumerator WheelRotation(int indexOfPrize, Prize prize)
     {
         _isSpinning = true;
         _spinButton.interactable = false;
@@ -62,23 +60,24 @@ public class BonusWheel : MonoBehaviour
         }
 
         //_wheelTransform.eulerAngles = new Vector3(0, 0 ,endingAngle + startingAngle);
-
-
+        
+        PrizePayloadHandler.IssuePrize(prize);
         _spinButton.interactable = true;
         _isSpinning = false;
     }
 
     private void SetPrizeDisplay()
     {
-        if (_prizes.Length != NUM_PRIZES)
+        if (_prizeSectors.Length != NUM_PRIZES)
         {
             Debug.Log($"<color=yellow>Inaccurate amount of prizes to wheel slots</color>");
         }
-        for (int i = 0; i < _prizes.Length; i++)
+        for (int i = 0; i < _prizeSectors.Length; i++)
         {
-            _prizes[i].transform.eulerAngles = new Vector3(0, 0, -360f / NUM_PRIZES * i);
+            _prizeSectors[i].transform.eulerAngles = new Vector3(0, 0, -360f / NUM_PRIZES * i);
         }
     }
+
     
     
 }
