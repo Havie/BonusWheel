@@ -9,7 +9,7 @@ public class BonusWheel : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Button _spinButton;
     [SerializeField] private Transform _wheelTransform;
-    [SerializeField] private GameObject[] _prizes;
+    [SerializeField] private WheelSector[] _prizes;
     [Header("Settings")] [Range(0.5f, 5f)]
     [SerializeField]private float _spinTime = 2.5f;
     [SerializeField]private int _numRotations = 4;
@@ -70,6 +70,10 @@ public class BonusWheel : MonoBehaviour
 
     private void SetPrizeDisplay()
     {
+        if (_prizes.Length != NUM_PRIZES)
+        {
+            Debug.Log($"<color=yellow>Inaccurate amount of prizes to wheel slots</color>");
+        }
         for (int i = 0; i < _prizes.Length; i++)
         {
             _prizes[i].transform.eulerAngles = new Vector3(0, 0, -360f / NUM_PRIZES * i);
