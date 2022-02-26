@@ -17,11 +17,13 @@ namespace Prizes
 		[SerializeField] private float _lifeTimeChangeSeconds = 1800;
 
 		private const float SEC_TO_MIN = 0.016666f;
-		public override string GetUIRewardDisplay()
+
+		public override string GetUIRewardDisplay(bool isDebugLog = false)
 		{
 			int minutes = Mathf.RoundToInt(_lifeTimeChangeSeconds * SEC_TO_MIN);
-			return $"{minutes}<indent=50%>  <line-height=25%><size=40%>min</size></line-height></indent>";
+			return isDebugLog ? $"{minutes}min" : $"{minutes}<indent=50%>  <line-height=25%><size=40%>min</size></line-height></indent>";
 			//return $"{1800 / 60} <i>min</i>";
 		}
 	}
 }
+

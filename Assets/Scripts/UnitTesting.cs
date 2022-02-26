@@ -10,11 +10,16 @@ using UnityEngine;
 		
 		public static void OutputSectorData(WheelSector[] sectors)
 		{
+			float totalChance = 0;
 			for (int i = 0; i < sectors.Length; i++)
 			{
 				var currSector = sectors[i];
-				Debug.Log($"==Sector{i} has Prize {currSector.Prize.PrizeName} with dropchance of {currSector.DropChance}%");
+				totalChance += currSector.DropChance;
+				Debug.Log($" Sector<color=white> {i}</color> has Prize <color=green>{currSector.Prize.PrizeName}{currSector.Prize.GetUIRewardDisplay(true)}</color> with dropchance of <color=orange>{currSector.DropChance}%</color>  ");
 			}
+			
+			if(totalChance>100 || totalChance < 100)
+				Debug.Log($" <color=yellow>[WARNING] Sector drop chance doesnt add up recheck math!!</color>  totalChance={totalChance}  ");
 		}
 
 		public static void AddPrize(Prize p)

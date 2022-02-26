@@ -17,7 +17,7 @@ namespace Prizes
 		public int RewardAmount { get; private set; }
 		
 		
-		public override string GetUIRewardDisplay()
+		public override string GetUIRewardDisplay(bool isDebugLog=false)
 		{
 			return $"x{RewardAmount}";
 		}

@@ -80,14 +80,19 @@ public class BonusWheel : MonoBehaviour
         }
     }
 
-
-    private void RunUnitTests(int spinCount)
+    [ContextMenu("RunDesignerSectorTest")]
+    private void RunDesignerSectorTest()
     {
         UnitTesting.OutputSectorData(_prizeSectors);
+    }
 
+    [ContextMenu("Run1000UnitTests")]
+    private void Run1000UnitTests()
+    {
+        
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
-        for (int i = 0; i < spinCount; i++)
+        for (int i = 0; i < 1000; i++)
         {
             var prize = _dropTable.GeneratePrize(out _);
             UnitTesting.AddPrize(prize);

@@ -10,6 +10,6 @@ namespace Prizes
 		[field : SerializeField]
 		public Sprite PrizeIcon  { get; private set; }
 		
-		public abstract string GetUIRewardDisplay();
+		public abstract string GetUIRewardDisplay(bool isDebugLog=false);
 	}
 }

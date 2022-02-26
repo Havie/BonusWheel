@@ -945,6 +945,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1245791083}
     m_Modifications:
+    - target: {fileID: 4033869061866898978, guid: 815b3ebbe3e38a044934abeb116eb152, type: 3}
+      propertyPath: _dropChance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7089600297854338533, guid: 815b3ebbe3e38a044934abeb116eb152, type: 3}
       propertyPath: _spinButton
       value: 
