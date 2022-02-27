@@ -1,4 +1,8 @@
-﻿
+﻿/*
+* AUTHOR : Steve Datz
+* DESC :
+*/
+
 using System.Collections.Generic;
 using Prizes;
 using UnityEngine;

@@ -1,5 +1,9 @@
+/*
+* AUTHOR : Steve Datz
+* DESC :
+*/
+
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Prizes;
 using UnityEngine;

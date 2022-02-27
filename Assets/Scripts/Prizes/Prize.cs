@@ -1,4 +1,8 @@
-using TMPro;
+/*
+* AUTHOR : Steve Datz
+* DESC :
+*/
+
 using UnityEngine;
 
 namespace Prizes

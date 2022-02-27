@@ -3,7 +3,6 @@
 * DESC :
 */
 
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Prizes
