@@ -19,7 +19,7 @@ namespace Prizes
 			};
 			
 		}
-
+	/************************************************************************************************************************/
 		private static bool HandleIntPrize(IntPrize intPrize)
 		{
 			Debug.Log($"Earned <color=green>{intPrize.PrizeName}</color> x{intPrize.RewardAmount}");

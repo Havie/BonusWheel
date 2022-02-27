@@ -15,9 +15,9 @@ namespace Prizes
 		//for this test, just being able to separate by int vs time is enough
 		public float GetLifeTimeChange => _lifeTimeChangeSeconds;
 		[SerializeField] private float _lifeTimeChangeSeconds = 1800;
-
+		
 		private const float SEC_TO_MIN = 0.016666f;
-
+		/************************************************************************************************************************/
 		public override string GetUIRewardDisplay(bool isDebugLog = false)
 		{
 			int minutes = Mathf.RoundToInt(_lifeTimeChangeSeconds * SEC_TO_MIN);

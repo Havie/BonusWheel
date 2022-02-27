@@ -29,8 +29,13 @@ public class BonusWheel : MonoBehaviour
     {
         _singleRotationAngle = 360f / NUM_PRIZES;
         SetPrizeDisplay();
-        _dropTable = new SectorDropTable(_prizeSectors);
+        GenerateDropTable();
         _spinButton.onClick.AddListener(SpinWheel);
+    }
+
+    private void GenerateDropTable()
+    {
+        _dropTable = new SectorDropTable(_prizeSectors);
     }
 
     /*********************************************************************/
@@ -80,6 +85,9 @@ public class BonusWheel : MonoBehaviour
         }
     }
 
+    /*************************************************************************************************************************************/
+    //TESTING:   can be run from three dots on component (would write a custom inspector to expose button for designer in real project)
+    /*************************************************************************************************************************************/
     [ContextMenu("RunDesignerSectorTest")]
     private void RunDesignerSectorTest()
     {
@@ -89,16 +97,19 @@ public class BonusWheel : MonoBehaviour
     [ContextMenu("Run1000UnitTests")]
     private void Run1000UnitTests()
     {
+        if (_dropTable == null)
+            GenerateDropTable();
         
+        const int ITERATIONS = 1000;
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < ITERATIONS; i++)
         {
             var prize = _dropTable.GeneratePrize(out _);
-            UnitTesting.AddPrize(prize);
+            UnitTesting.KeepTrackOfPrize(prize);
         }
         stopwatch.Stop();
-        UnitTesting.OutputPrizeResults(stopwatch.ElapsedMilliseconds);
+        UnitTesting.OutputPrizeResults(stopwatch.ElapsedMilliseconds , ITERATIONS);
     }
 
     
