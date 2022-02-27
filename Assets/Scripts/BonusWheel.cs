@@ -13,12 +13,15 @@ public class BonusWheel : MonoBehaviour
     [SerializeField] private Button _spinButton;
     [SerializeField] private Transform _wheelTransform;
     [SerializeField] private WheelSector[] _prizeSectors;
-    [Header("Settings")] [Range(0.5f, 5f)]
+    [Header("Settings")] 
+    [Range(0.5f, 5f)] [Tooltip("Time we want the wheel to spin for")]
     [SerializeField]private float _spinTime = 2.5f;
+    [Tooltip("Number of rotations we want to occur")]
     [SerializeField]private int _numRotations = 4;
+    [Tooltip("A curve for easing rotation through out the duration")]
     [SerializeField] private AnimationCurve _spinCurve;
-    
-    private float _singleRotationAngle = 22.5f;
+
+    private float _singleRotationAngle; // = 22.5f;
     private const int NUM_PRIZES = 8;
     private SectorDropTable _dropTable;
     private bool _isSpinning;
@@ -32,22 +35,16 @@ public class BonusWheel : MonoBehaviour
         GenerateDropTable();
         _spinButton.onClick.AddListener(SpinWheel);
     }
-
-    private void GenerateDropTable()
-    {
-        _dropTable = new SectorDropTable(_prizeSectors);
-    }
-
+    
     /*********************************************************************/
     private void SpinWheel()
     {
         if (_isSpinning)
             return;
         
-        var prize = _dropTable.GeneratePrize(out var sectorIndex);
+        var prize = _dropTable.GenerateRandomPrize(out var sectorIndex);
         StartCoroutine(WheelRotation(sectorIndex, prize));
     }
-    
     
     IEnumerator WheelRotation(int indexOfPrize, Prize prize)
     {
@@ -84,7 +81,11 @@ public class BonusWheel : MonoBehaviour
             _prizeSectors[i].transform.eulerAngles = new Vector3(0, 0, -360f / NUM_PRIZES * i);
         }
     }
-
+   
+    private void GenerateDropTable()
+    {
+        _dropTable = new SectorDropTable(_prizeSectors);
+    }
     /*************************************************************************************************************************************/
     //TESTING:   can be run from three dots on component (would write a custom inspector to expose button for designer in real project)
     /*************************************************************************************************************************************/
@@ -105,7 +106,7 @@ public class BonusWheel : MonoBehaviour
         stopwatch.Start();
         for (int i = 0; i < ITERATIONS; i++)
         {
-            var prize = _dropTable.GeneratePrize(out _);
+            var prize = _dropTable.GenerateRandomPrize(out _);
             UnitTesting.KeepTrackOfPrize(prize);
         }
         stopwatch.Stop();

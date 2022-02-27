@@ -20,7 +20,7 @@ public class SectorDropTable
 		/// Generates a prize based on pre-determined drop chances
 		/// </summary>
 		/// <returns>The prize from the sector</returns>
-		public Prize GeneratePrize(out int sectorIndex)
+		public Prize GenerateRandomPrize(out int sectorIndex)
 		{
 			int i = UnityEngine.Random.Range(0, _dropTable.Length);
 			var dropTableItem = _dropTable[i];
@@ -32,7 +32,7 @@ public class SectorDropTable
 		/************************************************************************************************************************/
 		/// <summary>
 		/// Maps the drop chances from the sectors to an index'd array 0-99
-		/// for generating random numbers for
+		/// for generating random numbers from
 		/// </summary>
 		/// <param name="sectors"></param>
 		private void GenerateDropTable(IEnumerable<WheelSector> sectors)
